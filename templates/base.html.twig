@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+	<meta charset="UTF-8">
+	<title>MovieGoers - {% block title %}{% endblock %}</title>
+	<link href="{{ asset('assets/bootstrap-4.4.1/bootstrap.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet"/>
+	{% block head %}
+	{% endblock %}
+</head>
+<body>
+	{% include 'navbar.html.twig' %}
+	<main role="main">
+		{% block content %}
+		{% endblock %}
+	</main>
+
+	{% block scripts %}
+	{% endblock %}
+
+	{% include 'footer.html' %}
+</body>
 </html>

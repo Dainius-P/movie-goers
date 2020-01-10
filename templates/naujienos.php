@@ -1,6 +1,0 @@
-<h1>Naujienos</h1>
-
-<h2>Kevin Feige Doesn't Believe In Star Wars Fatigue</h2>
-<p>Kevin Feige says he doesn't believe that there's so-called Star Wars fatigue. After building the 23-film Infinity Saga, the architect behind the Marvel Cinematic Universe is ready to try his hand on a brand new franchise exclusively set in a galaxy, far far away. With his impending project with Lucasfilm for the famed space opera, the producer extraordinaire has been asked about his thoughts on the current status of the long-running film series, including whether or not he thinks that it has achieved the point of saturation.
-
-Since its renaissance in 2015 via Star Wars: The Force Awakens following Disney's acquisition of Lucasfilm, the franchise has gone on to release three more films - Rogue One: A Star Wars Story; Star Wars: The Last Jedi, and Solo: A Star Wars Story. It's tipped to roll out J.J. Abrams' Star Wars: The Rise of Skywalker - the final installment in the sequel trilogy and the Skywalker saga as well. This new crop of Star Wars films has done good at the box office thus far - three of its four releases have crossed $1 billion, with Episode VII making more than $2 billion. And yet, the idea that there's fatigue surrounding the franchise is is a favorite topic of conversation among fans and industry people.</p>
