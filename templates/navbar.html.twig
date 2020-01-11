@@ -1,8 +1,76 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm bg-dark">
-  <h5 class="my-0 mr-md-auto font-weight-normal text-white"><a class="p-2 text-white " href="{{ path('index') }}">Movie Goers</a></h5>
-  <nav class="my-2 my-md-0 mr-md-3">
-    <a class="p-2 text-white " href="#">Filmu sarasas</a>
-    <a class="p-2 text-white" href="#">Apzvalgu sarasas</a>
-    <a class="p-2 text-white" href="#">Filmo kurimas</a>
-  </nav>
-</div>
+<!-- header -->
+<header class="header">
+	<div class="header__wrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="header__content">
+						<!-- header logo -->
+						<a href="{{ path('index') }}" class="header__logo">
+							<img src="img/logo.svg" alt="">
+						</a>
+						<!-- end header logo -->
+
+						<!-- header nav -->
+						<ul class="header__nav">
+							<!-- dropdown -->
+							<li class="header__nav-item">
+								<a class="dropdown-toggle header__nav-link" href="{{ path('index') }}" role="button" id="dropdownMenuHome" aria-expanded="false">Pagrindinis</a>
+							</li>
+							<!-- end dropdown -->
+
+							<!-- dropdown -->
+							<li class="header__nav-item">
+								<a class="dropdown-toggle header__nav-link" href="#" role="button" aria-expanded="false">Filmų sąrašas</a>
+							</li>
+
+							<li class="header__nav-item">
+								<a href="#" class="header__nav-link">Pridėti filmą</a>
+							</li>
+
+							<li class="header__nav-item">
+								<a href="#" class="header__nav-link">Mėgstamų filmų sąrašas</a>
+							</li>
+							<!-- end dropdown -->
+						</ul>
+						<!-- end header nav -->
+
+						<!-- header auth -->
+						<div class="header__auth">
+
+							<a href="signin.html" class="header__sign-in">
+								<i class="icon ion-ios-log-in"></i>
+								<span>Prisijungti</span>
+							</a>
+						</div>
+						<!-- end header auth -->
+
+						<!-- header menu btn -->
+						<button class="header__btn" type="button">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button>
+						<!-- end header menu btn -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- header search -->
+	<form action="#" class="header__search">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<div class="header__search-content">
+						<input type="text" placeholder="Search for a movie, TV Series that you are looking for">
+
+						<button type="button">search</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!-- end header search -->
+</header>
