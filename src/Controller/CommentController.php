@@ -7,6 +7,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Entity\Comment;
+use App\Entity\CommentReport;
+use App\Entity\CommentRating;
 
 class CommentController extends AbstractController
 {
@@ -73,12 +75,12 @@ class CommentController extends AbstractController
     */
     public function delete_comment(Request $request, UserInterface $user){
         $entityManager = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(Comment::class);
+        $repo = $this->getDoctrine()->getRepository(Comment::class);
 
         $author_id = $user->getId();
         $object_id = $request->query->get('object_id');
 
-        $comment = $repository->findOneBy([
+        $comment = $repo->findOneBy([
             'author_id' => $author_id,
             'id' => $object_id,
         ]);
@@ -100,13 +102,13 @@ class CommentController extends AbstractController
     */
     public function edit_comment(Request $request, UserInterface $user){
         $entityManager = $this->getDoctrine()->getManager();
-        $repository = $this->getDoctrine()->getRepository(Comment::class);
+        $repo = $this->getDoctrine()->getRepository(Comment::class);
 
         $comment_id = $request->request->get('comment_id');
         $author_id = $user->getId();
         $current_timestamp = new Assert\DateTime();
 
-        $comment = $repository->find($comment_id);
+        $comment = $repo->find($comment_id);
         if (!$comment || $comment->getAuthorId() != $author_id) {
             throw $this->createNotFoundException('Komentaras nerastas');
         }
@@ -119,6 +121,87 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('comments', [
             'obj_id' => $comment->getObjectId()
+        ]);
+    }
+
+    /**
+    * @Route("/comments/report", name="report_comment", methods={"POST"})
+    */
+    public function report_comment(Request $request, UserInterface $user){
+        $entityManager = $this->getDoctrine()->getManager();
+        $repo = $this->getDoctrine()->getRepository(CommentReport::class);
+
+        $comment_id = $request->request->get('comment_id');
+        $report_text = $request->request->get('report');
+        $current_timestamp = new Assert\DateTime();
+        $author_id = $user->getId();
+
+        $report = $repo->findOneBy([
+            'author_id' => $author_id,
+            'comment_id' => $comment_id
+        ]);
+
+        if($report){
+            throw $this->createNotFoundException(
+                'Negalima kurti dvieju reportu'
+            );
+        }
+
+        $comment_report = new CommentReport();
+        $comment_report->setCommentId($comment_id);
+        $comment_report->setAuthorId($author_id);
+        $comment_report->setReport($report_text);
+        $comment_report->setTimestampCreated($current_timestamp);
+
+        $entityManager->persist($comment_report);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('comments', [
+            'obj_id' => $comment_id
+        ]);
+    }
+
+
+    /**
+    * @Route("/comments/rate", name="rate_comment", methods={"POST"})
+    */
+    public function rate_comment(Request $request, UserInterface $user){
+        $entityManager = $this->getDoctrine()->getManager();
+        $repo = $this->getDoctrine()->getRepository(CommentRating::class);
+
+        $comment_id = $request->request->get('comment_id');
+        $author_id = $user->getId();
+        $current_timestamp = new Assert\DateTime();
+        $rating = $request->request->get('rating');
+
+        if($rating < 0 || $rating > 5){
+            throw $this->createNotFoundException(
+                'Vertinimas turi buti tarp 0 ir 5'
+            );
+        }
+
+        $com_rating = $repo->findOneBy([
+            'author_id' => $author_id,
+            'comment_id' => $comment_id
+        ]);
+
+        if($com_rating){
+            throw $this->createNotFoundException(
+                'Negalima vertinti to pacio komentaro du kartus'
+            );
+        }
+
+        $comment_rating = new CommentRating();
+        $comment_rating->setCommentId($comment_id);
+        $comment_rating->setRating($rating);
+        $comment_rating->setAuthorId($author_id);
+        $comment_rating->setTimestampCreated($current_timestamp);
+
+        $entityManager->persist($comment_rating);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('comments', [
+            'obj_id' => $comment_id
         ]);
     }
 }
