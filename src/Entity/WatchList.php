@@ -29,7 +29,7 @@ class WatchList
     /**
      * @ORM\Column(type="integer")
      */
-    private $UserID;
+    private $OwnerID;
 
     public function getId(): ?int
     {
@@ -60,14 +60,14 @@ class WatchList
         return $this;
     }
 
-    public function getUserID(): ?int
+    public function getOwnerID(): ?int
     {
-        return $this->UserID;
+        return $this->OwnerID;
     }
 
-    public function setUserID(int $UserID): self
+    public function setOwnerID(int $OwnerID): self
     {
-        $this->UserID = $UserID;
+        $this->OwnerID = $OwnerID;
 
         return $this;
     }
