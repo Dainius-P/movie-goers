@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use App\Form\UserType;
 use Doctrine\DBAL\Types\StringType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -64,15 +66,24 @@ class RegistrationController extends AbstractController
             
             $user = new User();
             $user -> setUsername($data['username']);
-            $user -> setPassword(
-                $passwordEncoder->encodePassword($user,$data['password'])
-            );
-            $user -> setPassword();
+            $user -> setPassword($data['password']);
+            $user -> setEmail($data['email']);
+            $user -> setImage('Tuscia');
+            $user -> setSecurityQuestion('Tuscia');
+            $user -> setSecurityAnswer('Tuscia');
+            $user -> setPhone('Tuscia');
+            $user -> setWatchListSize('0');
+            $user -> setDescription('Tuscia');
+            $user -> setMoviesSeenCount('0');
+            $user -> setComentCount('0');
+            $user -> setRatingCount('0');
+            
             dump($user);
             $em = $this->getDoctrine()->getManager();
 
             $em ->persist($user);
             $em->flush();
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/index.html.twig', [
