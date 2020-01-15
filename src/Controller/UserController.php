@@ -15,12 +15,13 @@ class UserController extends AbstractController
      */
     public function userpage()
     {
-       	return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'username' => get_current_user()]);
+        $user = $this ->getUser();
+       	return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'user' => $user ]);
         }
     /**
-     * @Route("/user/{page}", name="userpage")
+     * @Route("/user/{userid}", name="userpage")
      */
-    public function userpageU()
+    public function userpageU(int $userid)
     {
     return $this->render('user/user.html.twig', ['controller_name' => 'UserController', ]);
 	} 
@@ -30,6 +31,13 @@ class UserController extends AbstractController
     public function watchlist()
     {
     return $this->render('user/watchlist.html.twig', ['controller_name' => 'UserController', ]);
+    } 
+    /**
+     * @Route("/useredit", name="editUser")
+     */
+    public function EditUser()
+    {
+    return $this->render('user/editUser.html.twig', ['controller_name' => 'UserController', ]);
     } 
     
 }
