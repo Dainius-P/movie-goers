@@ -7,7 +7,7 @@
 					<div class="header__content">
 						<!-- header logo -->
 						<a href="{{ path('index') }}" class="header__logo">
-							<img src="/img/logo.svg" alt="">
+							<h2>MovieGoers</h2>
 						</a>
 						<!-- end header logo -->
 
@@ -23,6 +23,7 @@
 							<li class="header__nav-item">
 								<a class="dropdown-toggle header__nav-link" href="{{ path('movies') }}" role="button" aria-expanded="false">Filmų sąrašas</a>
 							</li>
+<<<<<<< HEAD
 							<li class="header__nav-item">
 								<a class="dropdown-toggle header__nav-link" href="{{ path('user') }}" role="button" aria-expanded="false">Paskyra</a>
 							</li>
@@ -34,23 +35,48 @@
 							<li class="header__nav-item">
 								<a href="#" class="header__nav-link">Mėgstamų filmų sąrašas</a>
 							</li>
+							{% if is_granted('IS_AUTHENTICATED_REMEMBERED')%}
 							<li class="header__nav-item">
 								<a class="dropdown-toggle header__nav-link" href="{{ path('app_logout') }}" role="button" aria-expanded="false">Atsijungti</a>
 							</li>
+							{% endif %}
 
+=======
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<li class="header__nav-item">
+									<a href="#" class="header__nav-link">Pridėti filmą</a>
+								</li>
+								<li class="header__nav-item">
+									<a href="#" class="header__nav-link">Mėgstamų filmų sąrašas</a>
+								</li>
+							{% endif %}
+>>>>>>> 2dde10265b5a6763382d4d2fb5aa16889c8f668e
 							<!-- end dropdown -->
 						</ul>
 						<!-- end header nav -->
-
+						{% if is_granted('IS_AUTHENTICATED_FULLY')%}
+						{% else %}
 						<!-- header auth -->
 						<div class="header__auth">
+							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+								<li class="dropdown header__nav-item">
+									<a class="header__sign-in" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-log-in"></i>
+									<span>Vartotojas</span></a>
 
-							<a href="{{ path('app_login') }}" class="header__sign-in">
-								<i class="icon ion-ios-log-in"></i>
-								<span>Prisijungti</span>
-							</a>
+									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
+										<li><a href="#">Paskyra</a></li>
+										<li><a href="{{ path('logout') }}">Atsijungti</a></li>
+									</ul>
+								</li>
+							{% else %}
+								<a href="{{ path('signin') }}" class="header__sign-in">
+									<i class="icon ion-ios-log-in"></i>
+									<span>Prisijungti</span>
+								</a>
+							{% endif %}
 						</div>
 						<!-- end header auth -->
+						{% endif %}
 
 						<!-- header menu btn -->
 						<button class="header__btn" type="button">
