@@ -17,7 +17,24 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 
 class MovieController extends AbstractController
 {
-/**
+    /**
+    *@Route("/",name="randmovies")
+    */
+    public function randmovies()
+    {
+        $cnt = 4;
+        $movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        if($cnt >= count($movies))
+        {
+            $cnt = count($movies);
+            return $this->render('index/index.html.twig',['rmovies'=>$rmovies]);
+        }
+        return $this->render('index/index.html.twig',['rmovies'=>$rmovies]);
+    }
+
+
+
+    /**
     *@Route("/movie/edit/{id}",name="edit_movie",methods={"GET","POST"})
     */
     public function edit(Request $request, $id)
@@ -27,6 +44,7 @@ class MovieController extends AbstractController
 
         $form = $this->createFormBuilder($movie)
         ->add('Pavadinimas',TextType::class,['attr'=>['class'=>'form-control']])
+        ->add('Aprasymas',TextareaType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
@@ -56,7 +74,10 @@ class MovieController extends AbstractController
     public function test_movielist()
     {
         $movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
-        return $this->render('movie/testmovielist.html.twig',['movies'=>$movies]);
+        $m = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        $id = 2;
+        $cnt = count($movies);
+        return $this->render('movie/testmovielist.html.twig',['movies'=>$movies,'m'=>$m[$id],'cnt'=>$cnt]);
     }
 
     /**
@@ -82,9 +103,7 @@ class MovieController extends AbstractController
         $movie = $entityManager->getRepository('App\Entity\Movie')->find($id);
 
         if (!$movie) {
-            throw $this->createNotFoundException(
-                'There are no movies with the following id: ' . $id
-            );
+            return $this->redirectToRoute('testmovielist');
         }
 
         $entityManager->remove($movie);
@@ -111,10 +130,11 @@ class MovieController extends AbstractController
 
         $form = $this->createFormBuilder($movie)
         ->add('Pavadinimas',TextType::class,['attr'=>['class'=>'form-control']])
-        ->add('Isleidimo_data',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Aprasymas',TextareaType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Trukme',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Pelnas',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Islaidos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Pajamos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
@@ -176,15 +196,14 @@ class MovieController extends AbstractController
         );
     }
     /**
-     * @Route("/movies/d/{id}", name="movie_details")
+     * @Route("/filmai/{id}", name="movie_details")
        @Method({"GET"})
     */
     public function movie_details(int $id)
     {
-        return $this->render(
-            'movie/movie_details.html.twig',
-            array('movie' => 'labas')
-        );
+        $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
+        //reikia nukreipti jei id neegzistuoja
+        return $this->render('movie/movie_details.html.twig',['movie' => $movie]);
     }
 
     /**

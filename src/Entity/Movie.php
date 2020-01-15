@@ -61,6 +61,11 @@ class Movie
      */
     private $Originalus_pavadinimas;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $Aprasymas;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +175,18 @@ class Movie
     public function setOriginalusPavadinimas(?string $Originalus_pavadinimas): self
     {
         $this->Originalus_pavadinimas = $Originalus_pavadinimas;
+
+        return $this;
+    }
+
+    public function getAprasymas(): ?string
+    {
+        return $this->Aprasymas;
+    }
+
+    public function setAprasymas(?string $Aprasymas): self
+    {
+        $this->Aprasymas = $Aprasymas;
 
         return $this;
     }
