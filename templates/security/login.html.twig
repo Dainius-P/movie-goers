@@ -11,7 +11,8 @@
                         <!-- authorization form -->
                         <form method="post" class="sign__form">
                         {% if error %}
-                          <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        <span class="sign__text">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                          {# <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
                         {% endif %}
                         <div class="alert alert-danger"> Danger </div>
                             <a href="{{ path('index') }}" class="sign__logo">
@@ -37,7 +38,7 @@
                             
                             <button class="sign__btn" type="submit">Prisijungti</button>
 
-                            <span class="sign__text">Neturi paskyros? <a href="{{ path('signup') }}">Registracija!</a></span>
+                            <span class="sign__text">Neturi paskyros? <a href="{{ path('register') }}">Registracija!</a></span>
 
                             <span class="sign__text"><a href="#">Pamiršai slaptažodį?</a></span>
                         </form>

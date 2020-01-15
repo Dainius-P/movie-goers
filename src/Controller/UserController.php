@@ -22,18 +22,4 @@ class UserController extends AbstractController
     {
     return $this->render('user/watchlist.html.twig', ['controller_name' => 'UserController', ]);
 	} 
-    /**
-     * @Route("/signin", name="signin")
-     */
-    public function signin()
-    {
-        return $this->render('user/signin.html.twig', ['controller_name' => 'UserController']);
-        }
-        /**
-     * @Route("/signup", name="signup")
-     */
-    public function signup()
-    {
-        return $this->render('user/signup.html.twig', ['controller_name' => 'UserController']);
-        }
 }
