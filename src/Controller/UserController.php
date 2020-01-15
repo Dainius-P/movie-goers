@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
 use App\Entity\WatchList;
+use App\Repository\UserRepository;
 
 class UserController extends AbstractController
 {
@@ -19,11 +22,15 @@ class UserController extends AbstractController
        	return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'user' => $user ]);
         }
     /**
-     * @Route("/user/{userid}", name="userpage")
+     * @Route("/user/{id}", name="userpage")
+     * @return Response
      */
-    public function userpageU(int $userid)
+    public function userpageU(int $id, UserRepository $userRepository)
     {
-    return $this->render('user/user.html.twig', ['controller_name' => 'UserController', ]);
+        //$id = 17;
+        $user = $userRepository->find($id);
+        dump($user, $id);
+        return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'user' => $user ]);
 	} 
     /**
      * @Route("/user/{page}/watchlist", name="watchlist")
