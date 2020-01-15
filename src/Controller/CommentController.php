@@ -56,7 +56,7 @@ class CommentController extends AbstractController
         $current_timestamp = new Assert\DateTime();
 
         $comment = new Comment();
-        $comment->setAuthorId($userId);
+        $comment->setAuthorId($author_id);
         $comment->setTimestampCreated($current_timestamp);
         $comment->setTimestampUpdated($current_timestamp);
         $comment->setComment($comment_text);

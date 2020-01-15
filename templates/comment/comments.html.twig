@@ -4,14 +4,14 @@
 			<div class="comments__autor">
 				<img class="comments__avatar" src="/img/user.jpeg" alt="">
 				<span class="comments__name">Vardenis Pavardenis</span>
-				<span class="comments__time">{{ comment.timestamp_created }}</span>
+				<span class="comments__time">{{ comment.getTimestampCreated()|date("Y-m-d H:m") }}</span>
 			</div>
 			<p class="comments__text">{{ comment.comment }}</p>
 			<div class="comments__actions">
 				<div class="comments__rate">
-					<button type="button"><i class="icon ion-md-thumbs-up"></i>12</button>
+					<button type="button"><i class="icon ion-md-thumbs-up"></i>0</button>
 
-					<button type="button">7<i class="icon ion-md-thumbs-down"></i></button>
+					<button type="button">0<i class="icon ion-md-thumbs-down"></i></button>
 				</div>
 
 				<button type="button"><i class="icon ion-ios-share-alt"></i>Pranešti</button>
