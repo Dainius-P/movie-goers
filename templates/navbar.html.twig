@@ -7,7 +7,7 @@
 					<div class="header__content">
 						<!-- header logo -->
 						<a href="{{ path('index') }}" class="header__logo">
-							<img src="/img/logo.svg" alt="">
+							<h2>MovieGoers</h2>
 						</a>
 						<!-- end header logo -->
 
@@ -39,10 +39,15 @@
 						<!-- header auth -->
 						<div class="header__auth">
 							{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-								<a href="{{ path('logout') }}" class="header__sign-in">
-									<i class="icon ion-ios-log-in"></i>
-									<span>Atsijungti</span>
-								</a>
+								<li class="dropdown header__nav-item">
+									<a class="header__sign-in" href="#" role="button" id="dropdownMenuMore" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon ion-ios-log-in"></i>
+									<span>Vartotojas</span></a>
+
+									<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
+										<li><a href="#">Paskyra</a></li>
+										<li><a href="{{ path('logout') }}">Atsijungti</a></li>
+									</ul>
+								</li>
 							{% else %}
 								<a href="{{ path('signin') }}" class="header__sign-in">
 									<i class="icon ion-ios-log-in"></i>

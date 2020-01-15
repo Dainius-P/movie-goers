@@ -166,7 +166,7 @@
 												<button type="button" class="form__btn">Siūsti</button>
 											{% else %}
 												<textarea id="text" disabled name="text" class="form__textarea" placeholder="Norint komentuoti reikia būti prisijungus prie paskyros"></textarea>
-												<button type="button" disabled class="form__btn">Prisijungti</button>
+												<a href="{{ path('signin') }}" class="form__btn">Prisijungti</a>
 											{% endif %}
 										</form>
 									</div>
