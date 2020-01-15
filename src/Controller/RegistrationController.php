@@ -81,7 +81,7 @@ class RegistrationController extends AbstractController
             $user -> setComentCount('0');
             $user -> setRatingCount('0');
             
-            dump($user);
+            //dump($user);
             $em = $this->getDoctrine()->getManager();
 
             $em ->persist($user);

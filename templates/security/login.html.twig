@@ -21,11 +21,11 @@
 
 
                             <div class="sign__group">
-                                <input type="text" class="sign__input" placeholder="Vartotojo Vardas">
+                                <input type="username" name="username" class="sign__input" placeholder="Vartotojo Vardas">
                             </div>
 
                             <div class="sign__group">
-                                <input type="password" class="sign__input" placeholder="Slaptažodis">
+                                <input type="password" name="password" class="sign__input" placeholder="Slaptažodis">
                             </div>
                             <input type="hidden" name="_csrf_token"
                              value="{{ csrf_token('authenticate') }}"
