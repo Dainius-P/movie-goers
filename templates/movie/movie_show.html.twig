@@ -1,0 +1,60 @@
+{% extends 'testbase.html.twig' %}
+
+{% block title %}Filmas{% endblock %}
+
+{% block body %}
+
+<p>Pavadinimas</p>
+<p>{{movie.Pavadinimas}}</p>
+
+<p>Isleidimo data</p>
+{% if movie.getIsleidimoData is null %}
+<p>isleidimo data nenustatyta</p>
+{% else %}
+<p>{{ movie.getIsleidimoData|date("m/d/Y") }}</p>
+{% endif%}
+
+<p>Ivercio vidurkis</p>
+{% if movie.getIvercioVidurkis is null %}
+<p>ivercio vidurkis nenustatytas</p>
+{% else %}
+<p>{{ movie.getIvercioVidurkis }}</p>
+{% endif%}
+
+<p>Iverciu kiekis</p>
+<p>{% if movie.getIvercioKiekis is null %}</p>
+<p>ivercio kiekis nenustatytas</p>
+{% else %}
+<p>{{ movie.getIvercioKiekis }}</p>
+{% endif%}
+
+<p>Trukme</p>
+<p>{% if movie.getTrukme is null %}</p>
+<p>Trukme nenustatyta</p>
+{% else %}
+<p>{{ movie.getTrukme|date("h:i") }}</p>
+{% endif%}
+
+<p>Pelnas</p>
+{% if movie.getPelnas is null %}
+<p>Pelno verte nenustatyta</p>
+{% else %}
+<p>{{ movie.getPelnas }}</p>
+{% endif%}
+
+<p>Islaidos</p>
+{% if movie.getIslaidos is null %}
+<p>Islaidos dar nenustatytos</p>
+{% else %}
+<p>{{ movie.getIslaidos }}</p>
+{% endif%}
+
+
+{% if movie.getIslaidos is null %}
+{% else %}
+<p>Originalus pavadinimas:</p>
+<p>{{ movie.getOriginalusPavadinimas }}</p>
+{% endif%}
+
+<a href="/test_movie_list">Go back</a>
+{% endblock %} 

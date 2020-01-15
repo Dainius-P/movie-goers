@@ -1,0 +1,39 @@
+{% extends 'testbase.html.twig' %}
+
+{% block title %}
+	Movie list(test)
+{% endblock %}
+
+
+{% block body %}
+	<h1>Movies</h1>
+<h3><b><a href="/new_movie/new2" class="btn btn-success">Create movie</a></b></h3>
+	{% if movies %}
+		<table id="movies" class="table table-striped">
+			<thread>
+				<tr>Movie</th>
+				<tr>Action</th>
+				</tr>
+			</thread>
+
+			<tbody>
+			{% for movie in movies %}
+			<tr>
+			<td>{{movie.Pavadinimas}}</td>
+			<td>
+			<a href="/movie/{{ movie.id }}" class="btn btn-primary">Show</a>
+			<a href="/movie/edit/{{ movie.id }}" class="btn btn-success">Edit</a>
+			<a href="#" class="btn btn-danger delete-movie" data-id="{{ movie.id }}">Delete</a>
+			</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No movies</p>
+	{% endif%}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/delete.js"></script>
+{% endblock %}
