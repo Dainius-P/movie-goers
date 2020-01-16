@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -93,16 +91,6 @@ class User implements UserInterface
      * @ORM\Column(type="integer")
      */
     private $RatingCount;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\WatchList", mappedBy="usr")
-     */
-    private $watchList;
-
-    public function __construct()
-    {
-        $this->watchList = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -305,37 +293,6 @@ class User implements UserInterface
     public function setRatingCount(int $RatingCount): self
     {
         $this->RatingCount = $RatingCount;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|WatchList[]
-     */
-    public function getWatchList(): Collection
-    {
-        return $this->watchList;
-    }
-
-    public function addWatchList(WatchList $watchList): self
-    {
-        if (!$this->watchList->contains($watchList)) {
-            $this->watchList[] = $watchList;
-            $watchList->setUsr($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWatchList(WatchList $watchList): self
-    {
-        if ($this->watchList->contains($watchList)) {
-            $this->watchList->removeElement($watchList);
-            // set the owning side to null (unless already changed)
-            if ($watchList->getUsr() === $this) {
-                $watchList->setUsr(null);
-            }
-        }
 
         return $this;
     }

@@ -169,7 +169,7 @@ class MovieController extends AbstractController
     }
 
     /**
-    *@Route("/naujas/filmas/",name="new_movie2",methods={"GET","POST"})
+    *@Route("/naujas/filmas/",name="naujasfilmas",methods={"GET","POST"})
     */
     public function new_movie2(Request $request)
     {
