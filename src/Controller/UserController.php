@@ -88,7 +88,7 @@ class UserController extends AbstractController
                 $uploads_dir = $this->getParameter('uploads_dir');
                 $file->move(
                     $uploads_dir,
-                    $filename                    
+                    $filename        
                 );
                 $user -> setImage($filename);
 
