@@ -17,19 +17,9 @@ class WatchList
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $MovieID;
-
-    /**
      * @ORM\Column(type="datetime")
      */
     private $Date;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $OwnerID;
 
     public function getId(): ?int
     {
