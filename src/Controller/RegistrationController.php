@@ -52,11 +52,6 @@ class RegistrationController extends AbstractController
             'placeholder' => "E. paštas"],
             'label' => false,
         ])
-        ->add('email', EmailType::class, [
-            'attr' => ['class' => 'sign__input',
-            'placeholder' => "E. paštas"],
-            'label' => false,
-        ])
 
         ->add('register', SubmitType::class, [
             'attr' => [
@@ -68,7 +63,7 @@ class RegistrationController extends AbstractController
         
         $form ->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if($form->isSubmitted() && $form->isValid()){
             $data = $form->getData();
 
 
@@ -81,9 +76,9 @@ class RegistrationController extends AbstractController
             $user -> setImage('\img\profilePics\sun.png');
             $user -> setSecurityQuestion('Tuscia');
             $user -> setSecurityAnswer('Tuscia');
-            $user -> setPhone('Tuscia');
+            $user -> setPhone('');
             $user -> setWatchListSize('0');
-            $user -> setDescription('Tuscia');
+            $user -> setDescription('');
             $user -> setMoviesSeenCount('0');
             $user -> setComentCount('0');
             $user -> setRatingCount('0');

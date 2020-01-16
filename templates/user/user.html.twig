@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}{{user.username}} {% endblock %}
 {% block content %}<!-- details -->
 	<section class="section details">
@@ -23,7 +24,7 @@
 							<!-- card cover -->
 							<div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-5">
 								<div class="card__cover">
-									<img src={{user.Image}} alt="">
+									<img src={{ asset('img/profilePics/' ~ user.Image)}} alt="">
 								</div>
 							</div>
 							<!-- end card cover -->
@@ -38,11 +39,16 @@
                                     {% else %}
                                         <li><span>Gimimo data: {{user.Birthday}}</span> </li>
                                     {% endif %}
+                                    {% if user.Phone is empty %}
+                                    {% else %}
+                                        <li><span>Telefono numeris: {{user.Phone}}</span> </li>
+                                    {% endif %}
+                                    
                                     
 										
 										<li><span>Matytų filmų skaičius:</span> {{user.MoviesSeenCount}} </li>
 										<li><span>Komentarų skaičius:</span> {{user.ComentCount}}</li>
-                                        <li><span>Mėgstamų filmų sarašas:</span> {{user.WatchListSize}}</li>
+                                        <li><span>Mėgstamų filmų skaičius:</span> {{user.WatchListSize}}</li>
 									</ul>
 
 									<div class="card__description card__description--details">
@@ -51,10 +57,17 @@
                                     {% else %}
                                     {{user.Description}}
                                     {% endif %}
+                                    
 									</div>
 								</div>
 							</div>
+
 							<!-- end card content -->
+                            {% if user == app.user %}
+                            <li class="header__nav-item">
+						<a class="header__nav-link" href="{{ path('editUser') }}" role="button" aria-expanded="false">Redaguoti paskyrą</a>
+					                </li>
+                            {% endif %}
 						</div>
 					</div>
 				</div>
@@ -65,9 +78,6 @@
 					</div>
 				</div>
 			</div>
-            <li class="header__nav-item">
-								<a class="header__nav-link" href="{{ path('editUser') }}" role="button" aria-expanded="false">Redaguoti paskyrą</a>
-							</li>
 		</div>
 		<!-- end details content -->
         
