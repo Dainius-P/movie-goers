@@ -27,7 +27,7 @@ Pagrindinis puslapis
                 <div class="col-12">
                     <!-- ==================== karusele-->
                     <div class="owl-carousel home__carousel">
-                    	{% for movie in randmovies %}
+                        {% for movie in randmovies %}
                         <div class="item">
                             <!-- =================================card -->
                             
@@ -46,16 +46,16 @@ Pagrindinis puslapis
                                         
                                     </span>
                                     {% if movie.getIvercioVidurkis is null %}
-									<span class="card__rate"><i class="icon ion-ios-star"></i></span>
-									{% else %}
-									<span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.getIvercioVidurkis }}</span>
-									{% endif%}
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i></span>
+                                    {% else %}
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.getIvercioVidurkis }}</span>
+                                    {% endif%}
                                 </div>
                             </div>
                            
                             <!-- ===============================end card -->
                         </div>
-                    	{% endfor %}
+                        {% endfor %}
                         </div>
                     </div>
                     <!-- ====================karusele baigiasi -->
@@ -102,8 +102,6 @@ Pagrindinis puslapis
                                     <li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">PREMJEROS</a></li>
 
                                     <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">FILMAI</a></li>
-
-                                    <li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">SERIALAI</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -118,9 +116,9 @@ Pagrindinis puslapis
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
                     <div class="row">
-                		<!-- FILMAI -->
-                		{% for movie in allmovies %}
-                		<!-- card -->
+                        <!-- FILMAI -->
+                        {% for movie in allmovies %}
+                        <!-- card -->
                         <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
                             <div class="card">
                                 <div class="card__cover">
@@ -146,9 +144,9 @@ Pagrindinis puslapis
                 <!-- SIEMET -->
                 <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
                     <div class="row">
-                    	{% if newmovies is defined %}
+                        {% if newmovies is defined %}
                         {% for movie in newmovies %}
-                		<!-- card -->
+                        <!-- card -->
                         <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
                             <div class="card">
                                 <div class="card__cover">

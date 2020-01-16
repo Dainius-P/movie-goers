@@ -22,6 +22,16 @@ class Comment
     private $author_id;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $positive_rating;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $negative_rating;
+
+    /**
      * @ORM\Column(type="text")
      */
     private $comment;
@@ -102,6 +112,28 @@ class Comment
     public function setObjectId(int $object_id): self
     {
         $this->object_id = $object_id;
+
+        return $this;
+    }
+    public function getPositiveRating(): ?int
+    {
+        return $this->positive_rating;
+    }
+
+    public function setPositiveRating(int $positive_rating): self
+    {
+        $this->positive_rating = $positive_rating;
+
+        return $this;
+    }
+    public function getNegativeRating(): ?int
+    {
+        return $this->negative_rating;
+    }
+
+    public function setNegativeRating(int $negative_rating): self
+    {
+        $this->negative_rating = $negative_rating;
 
         return $this;
     }

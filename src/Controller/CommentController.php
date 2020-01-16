@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Entity\CommentReport;
 use App\Entity\CommentRating;
 
@@ -45,6 +47,21 @@ class CommentController extends AbstractController
     }
 
     /**
+     * @Route("/comments/username/{id}", name="comment_username", methods={"GET"})
+    */
+    public function comment_username(int $id){
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $user = $repo->findOneBy([
+            'id' => $id
+        ]);
+
+        return $this->render(
+            'comment/comment_user.html.twig',
+            ['user' => $user]
+        );
+    }
+
+    /**
     * @Route("/comments/create", name="create_comment", methods={"POST"})
     */
     public function create_comment(Request $request, UserInterface $user){
@@ -53,20 +70,22 @@ class CommentController extends AbstractController
         $author_id = $user->getId();
         $object_id = $request->request->get('object_id');
         $comment_text = $request->request->get('comment');
-        $current_timestamp = new Assert\DateTime();
+        $current_timestamp = new \DateTime();
 
         $comment = new Comment();
         $comment->setAuthorId($author_id);
         $comment->setTimestampCreated($current_timestamp);
         $comment->setTimestampUpdated($current_timestamp);
+        $comment->setPositiveRating(0);
+        $comment->setNegativeRating(0);
         $comment->setComment($comment_text);
         $comment->setObjectId($object_id);
 
         $entityManager->persist($comment);
         $entityManager->flush();
 
-        return $this->redirectToRoute('comments', [
-            'obj_id' => $comment->getObjectId()
+        return $this->redirectToRoute('movie_details', [
+            'id' => $comment->getObjectId()
         ]);
     }
 
@@ -78,11 +97,11 @@ class CommentController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(Comment::class);
 
         $author_id = $user->getId();
-        $object_id = $request->query->get('object_id');
+        $comment_id = intval($request->request->get('comment_id'));
 
         $comment = $repo->findOneBy([
             'author_id' => $author_id,
-            'id' => $object_id,
+            'id' => $comment_id,
         ]);
 
         if($comment){
@@ -92,8 +111,8 @@ class CommentController extends AbstractController
             throw $this->createNotFoundException('Komentaras nerastas');
         }
 
-        return $this->redirectToRoute('comments', [
-            'obj_id' => $comment->getObjectId()
+        return $this->redirectToRoute('movie_details', [
+            'id' => $comment->getObjectId()
         ]);
     }
 
@@ -106,7 +125,7 @@ class CommentController extends AbstractController
 
         $comment_id = $request->request->get('comment_id');
         $author_id = $user->getId();
-        $current_timestamp = new Assert\DateTime();
+        $current_timestamp = new \DateTime();
 
         $comment = $repo->find($comment_id);
         if (!$comment || $comment->getAuthorId() != $author_id) {
@@ -133,7 +152,7 @@ class CommentController extends AbstractController
 
         $comment_id = $request->request->get('comment_id');
         $report_text = $request->request->get('report');
-        $current_timestamp = new Assert\DateTime();
+        $current_timestamp = new \DateTime();
         $author_id = $user->getId();
 
         $report = $repo->findOneBy([
@@ -167,41 +186,29 @@ class CommentController extends AbstractController
     */
     public function rate_comment(Request $request, UserInterface $user){
         $entityManager = $this->getDoctrine()->getManager();
-        $repo = $this->getDoctrine()->getRepository(CommentRating::class);
+        $repo = $this->getDoctrine()->getRepository(Comment::class);
 
         $comment_id = $request->request->get('comment_id');
-        $author_id = $user->getId();
-        $current_timestamp = new Assert\DateTime();
         $rating = $request->request->get('rating');
+        $movie_id = $request->request->get('movie_id');
 
-        if($rating < 0 || $rating > 5){
-            throw $this->createNotFoundException(
-                'Vertinimas turi buti tarp 0 ir 5'
-            );
-        }
-
-        $com_rating = $repo->findOneBy([
-            'author_id' => $author_id,
-            'comment_id' => $comment_id
+        $comment = $repo->findOneBy([
+            'id' => $comment_id
         ]);
 
-        if($com_rating){
-            throw $this->createNotFoundException(
-                'Negalima vertinti to pacio komentaro du kartus'
-            );
+        if($rating == 1){
+            $pos_rating = $comment->getPositiveRating();
+            $comment->setPositiveRating($pos_rating + 1);
+        } else {
+            $neg_rating = $comment->getNegativeRating();
+            $comment->setNegativeRating($neg_rating + 1);
         }
 
-        $comment_rating = new CommentRating();
-        $comment_rating->setCommentId($comment_id);
-        $comment_rating->setRating($rating);
-        $comment_rating->setAuthorId($author_id);
-        $comment_rating->setTimestampCreated($current_timestamp);
-
-        $entityManager->persist($comment_rating);
+        $entityManager->persist($comment);
         $entityManager->flush();
 
-        return $this->redirectToRoute('comments', [
-            'obj_id' => $comment_id
+        return $this->redirectToRoute('movie_details', [
+            'id' => $movie_id
         ]);
     }
 }

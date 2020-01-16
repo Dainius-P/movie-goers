@@ -167,15 +167,17 @@
 									<div class="comments">
 										<ul class="movie_details">
 											<ul class="movie_details">
+												{{ render(controller('App\\Controller\\CommentController::comments',{ 'obj_id': movie.Id })) }}
 											</ul>
 										</ul>
 
-										<form action="#" class="form">
+										<form action="{{ path('create_comment') }}" class="form" method="post">
+											<input type="number" name="object_id" value="{{ movie.Id }}" hidden />
 											{% if is_granted('IS_AUTHENTICATED_FULLY') %}
-												<textarea id="text" name="text" class="form__textarea" placeholder="Komentaras"></textarea>
-												<button type="button" class="form__btn">Siūsti</button>
+												<textarea id="text" name="comment" class="form__textarea" placeholder="Komentaras"></textarea>
+												<button type="submit" class="form__btn">Siūsti</button>
 											{% else %}
-												<textarea id="text" disabled name="text" class="form__textarea" placeholder="Norint komentuoti reikia būti prisijungus prie paskyros"></textarea>
+												<textarea id="text" disabled name="comment" class="form__textarea" placeholder="Norint komentuoti reikia būti prisijungus prie paskyros"></textarea>
 												<button type="button" disabled class="form__btn">Prisijungti</button>
 											{% endif %}
 										</form>

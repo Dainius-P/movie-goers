@@ -1,23 +1,38 @@
 {% if comments %}
-	{% for comment in comments %}
-		<li class="comments__item">
-			<div class="comments__autor">
-				<img class="comments__avatar" src="/img/user.jpeg" alt="">
-				<span class="comments__name">Vardenis Pavardenis</span>
-				<span class="comments__time">{{ comment.getTimestampCreated()|date("Y-m-d H:m") }}</span>
-			</div>
-			<p class="comments__text">{{ comment.comment }}</p>
-			<div class="comments__actions">
-				<div class="comments__rate">
-					<button type="button"><i class="icon ion-md-thumbs-up"></i>0</button>
+    {% for comment in comments %}
+        <li class="comments__item">
+            <div class="comments__autor">
+                <img class="comments__avatar" src="/img/user.jpeg" alt="">
+                <span class="comments__name">{{ render(controller('App\\Controller\\CommentController::comment_username',{ 'id': comment.getAuthorId() })) }}</span>
+                <span class="comments__time">{{ comment.getTimestampCreated()|date("Y-m-d H:m") }}</span>
+            </div>
+            <p class="comments__text">{{ comment.comment }}</p>
+            <div class="comments__actions">
+                <div class="comments__rate">
+                    <form action="{{ path('rate_comment') }}" method="post" style="margin-right: 10px;">
+                        <input type="number" value="{{ comment.id }}" name="comment_id" hidden />
+                        <input type="number" name="rating" value="1" hidden />
+                        <input type="number" name="movie_id" value="{{ comment.getObjectId() }}" hidden />
+                        <button type="submit"><i class="icon ion-md-thumbs-up" style="color:green;"></i>{{ comment.getPositiveRating() }}</button>
+                    </form>
 
-					<button type="button">0<i class="icon ion-md-thumbs-down"></i></button>
-				</div>
-
-				<button type="button"><i class="icon ion-ios-share-alt"></i>Pranešti</button>
-			</div>
-		</li>
-	{% endfor %}
+                    <form action="{{ path('rate_comment') }}" method="post" style="margin-right: 10px;">
+                        <input type="number" value="{{ comment.id }}" name="comment_id" hidden />
+                        <input type="number" name="rating" value="-1" hidden />
+                        <input type="number" name="movie_id" value="{{ comment.getObjectId() }}" hidden />
+                        <button type="submit">{{ comment.getNegativeRating() }}<i class="icon ion-md-thumbs-down"></i></button>
+                    </form>
+                </div>
+                {% if comment.getAuthorId() == app.user.id %}
+                    <form action="{{ path('delete_comment') }}" method="post" style="margin-right: 10px;">
+                        <input type="number" name="comment_id" value="{{ comment.id }}" hidden />
+                        <button type="submit"><i class="icon ion-ios-share-alt"></i>Ištrinti komentarą</button>
+                    </form>
+                {% endif %}
+                <button type="button"><i class="icon ion-ios-share-alt"></i>Pranešti</button>
+            </div>
+        </li>
+    {% endfor %}
 {% else %}
 <li class="comments__item">
 <p class="comments__text">Nėra komentarų</p>

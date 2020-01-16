@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Controller;
-
 use App\Entity\Movie;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,11 +12,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
-
 class MovieController extends AbstractController
 {
     /**
-    *@Route("/filmu_sarasas",name="filmu_sarasas")
+    *@Route("/",name="index")
     */
     public function randmovies()
     {
@@ -38,7 +35,6 @@ class MovieController extends AbstractController
         $j = 0;
         for ($i=0; $i < $totalcnt; $i++) 
         { 
-
             $date = $allmovies[$i]->getIsleidimoData();
             $diff = $date;
             $diff = date("Y-m-d");
@@ -82,9 +78,6 @@ class MovieController extends AbstractController
         }
         return $this->render('movie/movie_list.html.twig',['allmovies'=>$allmovies,'randmovies'=>$randmovies,'newmovies'=>$newmovies]);
     }
-
-
-
     /**
     *@Route("/filmas/redaguoti/{id}",name="edit_movie",methods={"GET","POST"})
     */
@@ -92,7 +85,6 @@ class MovieController extends AbstractController
     {
         $movie = new Movie();
         $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
-
         $form = $this->createFormBuilder($movie)
         ->add('Pavadinimas',TextType::class,['attr'=>['class'=>'form-control']])
         ->add('Aprasymas',TextareaType::class,['required'=>false,'attr'=>['class'=>'form-control']])
@@ -102,21 +94,17 @@ class MovieController extends AbstractController
         ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('save',SubmitType::class,['label'=>'Redaguoti', 'attr' => ['class' => 'btn btn-primary mt-3']])
         ->getForm();
-
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid())
         {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-            return $this->redirectToRoute('testmovielist');
+            return $this->redirectToRoute('filmuredagavimas');
         }
         return $this->render('movie/edit_movie.html.twig',['form'=> $form->createView()]);
     }
-
-
     /**
-    *@Route("/filmu_redagavimas",name="testmovielist")
+    *@Route("/filmu/redagavimas",name="filmuredagavimas")
     */
     public function test_movielist()
     {
@@ -126,7 +114,6 @@ class MovieController extends AbstractController
         $cnt = count($movies);
         return $this->render('movie/testmovielist.html.twig',['movies'=>$movies,'m'=>$m[$id],'cnt'=>$cnt]);
     }
-
     /**
     *@Route("/movie/delete/{id}",name="movie_delete",methods={"DELETE"})
     */
@@ -136,11 +123,9 @@ class MovieController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($movie);
         $entityManager->flush();
-
         $response = new Response();
         $response->send();
     }
-
     /**
     *@Route("/moviedelete2/{id}",name="movie_delete2",methods={"DELETE","GET"})
     */
@@ -148,18 +133,14 @@ class MovieController extends AbstractController
     {
         $entityManager = $this->getDoctrine()->getManager();
         $movie = $entityManager->getRepository('App\Entity\Movie')->find($id);
-
         if (!$movie) {
-            return $this->redirectToRoute('testmovielist');
+            return $this->redirectToRoute('filmuredagavimas');
         }
-
         $entityManager->remove($movie);
         $entityManager->flush();
-
         return $this->redirectToRoute('del');
         return $this->render('movieremoved.html.twig');
     }
-
     /**
     * @Route("/naikinimo_patvirtinimas",name="del")
     */
@@ -167,36 +148,31 @@ class MovieController extends AbstractController
     {
         return new Response('<html><body>Filmas istrintas</body></html><a href="/test_movie_list">Go back</a>');
     }
-
     /**
     *@Route("/naujas/filmas/",name="naujasfilmas",methods={"GET","POST"})
     */
     public function new_movie2(Request $request)
     {
         $movie = new Movie();
-
         $form = $this->createFormBuilder($movie)
         ->add('Pavadinimas',TextType::class,['attr'=>['class'=>'form-control']])
         ->add('Aprasymas',TextareaType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'sign__input']])
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'sign__input']])
         ->add('save',SubmitType::class,['label'=>'Kurti', 'attr' => ['class' => 'btn btn-primary mt-3']])
         ->getForm();
-
         $form->handleRequest($request);
-
         if($form->isSubmitted() && $form->isValid())
         {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($movie);
             $entityManager->flush();
-            return $this->redirectToRoute('patv');
+            return $this->redirectToRoute('filmuredagavimas');
         }
         return $this->render('movie/new_movie.html.twig',['form'=> $form->createView()]);
     }
-
     /**
     *@Route("/new_movie/new",name="new_movie")
     */
@@ -209,26 +185,18 @@ class MovieController extends AbstractController
                 ['attr'=>['class'=>'form-control']])
             ->add('save',SubmitType::class.['label'=>'Create','attr'=>['class'=>'btn btn-primary']])
             ->getForm();
-
             return $this->render('new_movie.html.twig',['form'=>$form->createView()]);*/
         
-
         $Pavadinimas = $request->request->get('Pavadinimas');
         $movie->setPavadinimas($Pavadinimas);
-
         //$Isleidimo_data = $request->request->get('Isleidimo_data');
         // $movie->setIsleidimoData($Isleidimo_data);
-
         //$Trukme = $request->request->get('Trukme');
         // $movie->setTrukme($Trukme);
-
-
         $entityManager->persist($movie);
         $entityManager->flush();
-
         return $this->redirectToRoute('movies',['id'=> $movie->getId()]);
     }
-
     /**
     * @Route("/sukurimo_patvirtinimas",name="patv")
     */
@@ -245,10 +213,20 @@ class MovieController extends AbstractController
     public function movie_details(int $id)
     {
         $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
+        $allmovies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        $movies;
+        $j=0;
+        while($j<6)
+        {
+            if($allmovies[$j]->getId() != $movie->getId())
+            {
+                $movies[$j] = $allmovies[$j];
+            }
+            $j++;
+        }
         //reikia nukreipti jei id neegzistuoja
-        return $this->render('movie/movie_details.html.twig',['movie' => $movie]);
+        return $this->render('movie/movie_details.html.twig',['movie' => $movie,'allmovies'=>$movies]);
     }
-
     /**
      * @Route("/movie/{id}",name="show_movie")
        @Method({"GET"})
@@ -258,7 +236,6 @@ class MovieController extends AbstractController
         $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
         return $this->render('movie/movie_show.html.twig',['movie' => $movie]);
     }
-
     /*
      @Route("/")
      @Method({"GET"})
@@ -269,7 +246,6 @@ class MovieController extends AbstractController
         // return $this->render('index/index.html.twig',
         //     ('movies' => $movies));
     }
-
     /**
      * @Route("/movies/{page}", name="movies")
      */
@@ -277,7 +253,4 @@ class MovieController extends AbstractController
     {
         return $this->render('movie/movie_list.html.twig');
     }
-
-
-
 }
