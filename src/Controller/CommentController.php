@@ -72,20 +72,22 @@ class CommentController extends AbstractController
         $comment_text = $request->request->get('comment');
         $current_timestamp = new \DateTime();
 
-        $comment = new Comment();
-        $comment->setAuthorId($author_id);
-        $comment->setTimestampCreated($current_timestamp);
-        $comment->setTimestampUpdated($current_timestamp);
-        $comment->setPositiveRating(0);
-        $comment->setNegativeRating(0);
-        $comment->setComment($comment_text);
-        $comment->setObjectId($object_id);
+        if($comment_text != null){
+            $comment = new Comment();
+            $comment->setAuthorId($author_id);
+            $comment->setTimestampCreated($current_timestamp);
+            $comment->setTimestampUpdated($current_timestamp);
+            $comment->setPositiveRating(0);
+            $comment->setNegativeRating(0);
+            $comment->setComment($comment_text);
+            $comment->setObjectId($object_id);
 
-        $entityManager->persist($comment);
-        $entityManager->flush();
+            $entityManager->persist($comment);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('movie_details', [
-            'id' => $comment->getObjectId()
+                'id' => $object_id
         ]);
     }
 
