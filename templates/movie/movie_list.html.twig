@@ -1,430 +1,439 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}
-Filmu sarasas
+Pagrindinis puslapis
 {% endblock %}
 
 {% block content %}
+    <!-- home -->
+    <section class="home home--bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+<!-- =========================================================================================== -->
+                <!-- title -->
+                    <h1 class="home__title"><b>NUSTEBINK MANE!</b></h1>
+                    {% if time is defined %}
+                    {{ time }}
+                    {% endif %}
+                    <button class="home__nav home__nav--prev" type="button">
+                        <i class="icon ion-ios-arrow-round-back"></i>
+                    </button>
+                    <button class="home__nav home__nav--next" type="button">
+                        <i class="icon ion-ios-arrow-round-forward"></i>
+                    </button>
+                </div>
 
-	<!-- page title -->
-	<section class="section section--first section--bg" data-bg="img/section/section.jpg">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="section__wrap">
-						<!-- section title -->
-						<h2 class="section__title">Filmų sąrašas</h2>
-						<!-- end section title -->
+                <div class="col-12">
+                    <!-- ==================== karusele-->
+                    <div class="owl-carousel home__carousel">
+                    	{% for movie in randmovies %}
+                        <div class="item">
+                            <!-- =================================card -->
+                            
+                            <div class="card card--big">
+                                <div class="card__cover">
+                                    <img src="img/covers/{{ movie.Pavadinimas }}.jpg" alt="">
+                                    <a href="/filmai/{{ movie.getId }}" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="/filmai/{{ movie.getId }}">{{ movie.Pavadinimas}}</a></h3>
+                                    <span class="card__category">
+                                     <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                        
+                                    </span>
+                                    {% if movie.getIvercioVidurkis is null %}
+									<span class="card__rate"><i class="icon ion-ios-star"></i></span>
+									{% else %}
+									<span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.getIvercioVidurkis }}</span>
+									{% endif%}
+                                </div>
+                            </div>
+                           
+                            <!-- ===============================end card -->
+                        </div>
+                    	{% endfor %}
+                        </div>
+                    </div>
+                    <!-- ====================karusele baigiasi -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end home -->
 
-						<!-- breadcrumb -->
-						<ul class="breadcrumb">
-							<li class="breadcrumb__item"><a href="{{ path('index') }}">Pagrindinis</a></li>
-							<li class="breadcrumb__item breadcrumb__item--active">Filmų sąrašas</li>
-						</ul>
-						<!-- end breadcrumb -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- end page title -->
+    <!-- content -->
+    <section class="content">
+        <div class="content__head">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+<!-- =========================================================================================== -->
+                        <!-- content title -->
+                        <h2 class="content__title">Kolekcija</h2>
+                        <!-- end content title -->
 
-	<!-- filter -->
-	<div class="filter">
-		<div class="container">
-			<div class="row">
-				<div class="col-12">
-					<div class="filter__content">
-						<div class="filter__items">
-							<!-- filter item -->
-							<div class="filter__item" id="filter__genre">
-								<span class="filter__item-label">ŽANRAI:</span>
+                        <!-- content tabs nav -->
+                        <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+                        <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="false">Filmai</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="true">Premjeros</a>
+                            </li>
 
-								<div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-genre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<input type="button" value="Action/Adventure">
-									<span></span>
-								</div>
+                            
+                        </ul>
+                        <!-- end content tabs nav -->
 
-								<ul class="filter__item-menu dropdown-menu scrollbar-dropdown" aria-labelledby="filter-genre">
-									<li>Action/Adventure</li>
-									<li>Animals</li>
-									<li>Animation</li>
-									<li>Biography</li>
-									<li>Comedy</li>
-									<li>Cooking</li>
-									<li>Dance</li>
-									<li>Documentary</li>
-									<li>Drama</li>
-									<li>Education</li>
-									<li>Entertainment</li>
-									<li>Family</li>
-									<li>Fantasy</li>
-									<li>History</li>
-									<li>Horror</li>
-									<li>Independent</li>
-									<li>International</li>
-									<li>Kids</li>
-									<li>Kids & Family</li>
-									<li>Medical</li>
-									<li>Military/War</li>
-									<li>Music</li>
-									<li>Musical</li>
-									<li>Mystery/Crime</li>
-									<li>Nature</li>
-									<li>Paranormal</li>
-									<li>Politics</li>
-									<li>Racing</li>
-									<li>Romance</li>
-									<li>Sci-Fi/Horror</li>
-									<li>Science</li>
-									<li>Science Fiction</li>
-									<li>Science/Nature</li>
-									<li>Spanish</li>
-									<li>Travel</li>
-									<li>Western</li>
-								</ul>
-							</div>
-							<!-- end filter item -->
+                        <!-- content mobile tabs nav -->
+                        <div class="content__mobile-tabs" id="content__mobile-tabs">
+                            <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <input type="button" value="New items">
+                                <span></span>
+                            </div>
 
-							<!-- filter item -->
-							<div class="filter__item" id="filter__quality">
-								<span class="filter__item-label">KOKYBĖ:</span>
+                            <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                                <ul class="nav nav-tabs" role="tablist">
+        <!-- =========================================================================================== -->
+                                    <li class="nav-item"><a class="nav-link active" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">PREMJEROS</a></li>
 
-								<div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-quality" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<input type="button" value="HD 1080">
-									<span></span>
-								</div>
+                                    <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">FILMAI</a></li>
 
-								<ul class="filter__item-menu dropdown-menu scrollbar-dropdown" aria-labelledby="filter-quality">
-									<li>HD 1080</li>
-									<li>HD 720</li>
-									<li>DVD</li>
-									<li>TS</li>
-								</ul>
-							</div>
-							<!-- end filter item -->
+                                    <li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">SERIALAI</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- end content mobile tabs nav -->
+                    </div>
+                </div>
+            </div>
+        </div>
 
-							<!-- filter item -->
-							<div class="filter__item" id="filter__rate">
-								<span class="filter__item-label">IMBd ĮVERTIS:</span>
+        <div class="container">
+            <!-- content tabs -->
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+                    <div class="row">
+                		<!-- FILMAI -->
+                		{% for movie in allmovies %}
+                		<!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/{{ movie.Pavadinimas }}.jpg" alt="">
+                                    <a href="/filmai/{{ movie.getId }}" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                <h3 class="card__title"><a href="/filmai/{{ movie.getId }}">{{ movie.Pavadinimas }}</a></h3>
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.getIvercioVidurkis }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        {% endfor %}
+                        <!-- FILMAI END -->
+                    </div>
+                </div>
+                <!-- SIEMET -->
+                <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+                    <div class="row">
+                    	{% if newmovies is defined %}
+                        {% for movie in newmovies %}
+                		<!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/{{ movie.Pavadinimas }}.jpg" alt="">
+                                    <a href="/filmai/{{ movie.getId }}" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                <h3 class="card__title"><a href="/filmai/{{ movie.getId }}">{{ movie.Pavadinimas }}</a></h3>
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>{{ movie.getIvercioVidurkis }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        {% endfor %}
+                        {% else %}
+                        <h2>Naujų filmų nėra</h2>
+                        {% endif%}
+                    </div>
+                </div>
+                <!-- SIEMET END -->
+                
 
-								<div class="filter__item-btn dropdown-toggle" role="button" id="filter-rate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<div class="filter__range">
-										<div id="filter__imbd-start"></div>
-										<div id="filter__imbd-end"></div>
-									</div>
-									<span></span>
-								</div>
+                <div class="tab-pane fade" id="tab-4" role="tabpanel" aria-labelledby="4-tab">
+                    <div class="row">
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-								<div class="filter__item-menu filter__item-menu--range dropdown-menu" aria-labelledby="filter-rate">
-									<div id="filter__imbd"></div>
-								</div>
-							</div>
-							<!-- end filter item -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover3.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Benched</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-							<!-- filter item -->
-							<div class="filter__item" id="filter__year">
-								<span class="filter__item-label">IŠLEIDIMO METAI:</span>
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover2.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Whitney</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-								<div class="filter__item-btn dropdown-toggle" role="button" id="filter-year" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<div class="filter__range">
-										<div id="filter__years-start"></div>
-										<div id="filter__years-end"></div>
-									</div>
-									<span></span>
-								</div>
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover6.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Blindspotting</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-								<div class="filter__item-menu filter__item-menu--range dropdown-menu" aria-labelledby="filter-year">
-									<div id="filter__years"></div>
-								</div>
-							</div>
-							<!-- end filter item -->
-						</div>
-						
-						<!-- filter btn -->
-						<button class="filter__btn" type="button">filtruoti</button>
-						<!-- end filter btn -->
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- end filter -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover4.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-	<!-- catalog -->
-	<div class="catalog">
-		<div class="container">
-			<div class="row">
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover.jpg" alt="">
-							<a href="{{ path('movie_details', {id: 1}) }}" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="{{ path('movie_details', {id: 1}) }}">I Dream in Another Language</a></h3>
-							<span class="card__category">
-								<a href="#">Action</a>
-								<a href="#">Triler</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover5.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Benched</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover2.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Benched</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover6.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Whitney</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover3.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Whitney</a></h3>
-							<span class="card__category">
-								<a href="#">Romance</a>
-								<a href="#">Drama</a>
-								<a href="#">Music</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover5.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Blindspotting</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover4.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Blindspotting</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-								<a href="#">Drama</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover4.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
+                                    <span class="card__category">
+                                       <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover5.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
-							<span class="card__category">
-								<a href="#">Action</a>
-								<a href="#">Triler</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover3.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Benched</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover6.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Benched</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover2.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Whitney</a></h3>
+                                    <span class="card__category">
+                                       <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
 
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover6.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Whitney</a></h3>
-							<span class="card__category">
-								<a href="#">Romance</a>
-								<a href="#">Drama</a>
-								<a href="#">Music</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover5.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Blindspotting</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-								<a href="#">Drama</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover4.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">I Dream in Another Language</a></h3>
-							<span class="card__category">
-								<a href="#">Action</a>
-								<a href="#">Triler</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>8.4</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover3.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Benched</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.1</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover2.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Whitney</a></h3>
-							<span class="card__category">
-								<a href="#">Romance</a>
-								<a href="#">Drama</a>
-								<a href="#">Music</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>6.3</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- card -->
-				<div class="col-6 col-sm-4 col-lg-3 col-xl-2">
-					<div class="card">
-						<div class="card__cover">
-							<img src="img/covers/cover.jpg" alt="">
-							<a href="#" class="card__play">
-								<i class="icon ion-ios-play"></i>
-							</a>
-						</div>
-						<div class="card__content">
-							<h3 class="card__title"><a href="#">Blindspotting</a></h3>
-							<span class="card__category">
-								<a href="#">Comedy</a>
-								<a href="#">Drama</a>
-							</span>
-							<span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
-						</div>
-					</div>
-				</div>
-				<!-- end card -->
-
-				<!-- paginator -->
-				<div class="col-12">
-					<ul class="paginator">
-						<li class="paginator__item paginator__item--prev">
-							<a href="#"><i class="icon ion-ios-arrow-back"></i></a>
-						</li>
-						<li class="paginator__item paginator__item--active"><a href="#">1</a></li>
-						<li class="paginator__item"><a href="#">2</a></li>
-						<li class="paginator__item"><a href="#">3</a></li>
-						<li class="paginator__item"><a href="#">4</a></li>
-						<li class="paginator__item paginator__item--next">
-							<a href="#"><i class="icon ion-ios-arrow-forward"></i></a>
-						</li>
-					</ul>
-				</div>
-				<!-- end paginator -->
-			</div>
-		</div>
-	</div>
-	<!-- end catalog -->
-
+                        <!-- card -->
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="img/covers/cover.jpg" alt="">
+                                    <a href="#" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">Blindspotting</a></h3>
+                                    <span class="card__category">
+                                        <!-- <a href="#">Kategorija</a>
+                                        <a href="#">Kategorija</a> -->
+                                    </span>
+                                    <span class="card__rate"><i class="icon ion-ios-star"></i>7.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                </div>
+            </div>
+            <!-- end content tabs -->
+        </div>
+    </section>
+    <!-- end content -->
 {% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'testbase.html.twig' %}
+
+{% block title %}
+	Filmų sąrašas administratoriui
+{% endblock %}
+
+
+{% block content %}
+	<h1>Filmai</h1>
+	<h1>Filmai</h1>
+
+<h3><b><a href="/naujas/filmas/" class="btn btn-success">Sukurti filmą</a></b></h3>
+	{% if movies %}
+		<table id="movies" class="table table-striped">
+			<thread>
+				</tr>
+			</thread>
+
+			<tbody>
+			{% for movie in movies %}
+			<tr>
+			<td><h4><font color="green">{{movie.Pavadinimas}}</font></h4></td>
+			<td>
+			<a href="/filmai/{{ movie.id }}" class="btn btn-primary">Parodyti</a>
+			<a href="/filmas/redaguoti/{{ movie.id }}" class="btn btn-success">Redaguoti</a>
+			<a href="#" class="btn btn-danger delete-movie" data-id="{{ movie.id }}">Delete</a>
+			</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No movies</p>
+	{% endif%}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/delete.js"></script>
+{% endblock %}
