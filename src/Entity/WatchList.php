@@ -21,19 +21,21 @@ class WatchList
      */
     private $Date;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="watchList")
-     */
-    private $usr;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="watchList")
-     */
-    private $movie;
-
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getMovieID(): ?int
+    {
+        return $this->MovieID;
+    }
+
+    public function setMovieID(int $MovieID): self
+    {
+        $this->MovieID = $MovieID;
+
+        return $this;
     }
 
     public function getDate(): ?\DateTimeInterface
@@ -48,26 +50,14 @@ class WatchList
         return $this;
     }
 
-    public function getUsr(): ?User
+    public function getOwnerID(): ?int
     {
-        return $this->usr;
+        return $this->OwnerID;
     }
 
-    public function setUsr(?User $usr): self
+    public function setOwnerID(int $OwnerID): self
     {
-        $this->usr = $usr;
-
-        return $this;
-    }
-
-    public function getMovie(): ?User
-    {
-        return $this->movie;
-    }
-
-    public function setMovie(?User $movie): self
-    {
-        $this->movie = $movie;
+        $this->OwnerID = $OwnerID;
 
         return $this;
     }

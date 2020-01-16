@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,16 +65,6 @@ class Movie
      * @ORM\Column(type="text", nullable=true)
      */
     private $Aprasymas;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\WatchList", mappedBy="movies")
-     */
-    private $watchList;
-
-    public function __construct()
-    {
-        $this->watchList = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -199,37 +187,6 @@ class Movie
     public function setAprasymas(?string $Aprasymas): self
     {
         $this->Aprasymas = $Aprasymas;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|WatchList[]
-     */
-    public function getWatchList(): Collection
-    {
-        return $this->watchList;
-    }
-
-    public function addWatchList(WatchList $watchList): self
-    {
-        if (!$this->watchList->contains($watchList)) {
-            $this->watchList[] = $watchList;
-            $watchList->setMovies($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWatchList(WatchList $watchList): self
-    {
-        if ($this->watchList->contains($watchList)) {
-            $this->watchList->removeElement($watchList);
-            // set the owning side to null (unless already changed)
-            if ($watchList->getMovies() === $this) {
-                $watchList->setMovies(null);
-            }
-        }
 
         return $this;
     }
