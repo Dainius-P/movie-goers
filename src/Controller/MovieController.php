@@ -169,7 +169,7 @@ class MovieController extends AbstractController
     }
 
     /**
-    *@Route("/naujas/filmas/",name="new_movie2",methods={"GET","POST"})
+    *@Route("/naujas/filmas/",name="naujasfilmas",methods={"GET","POST"})
     */
     public function new_movie2(Request $request)
     {
@@ -245,8 +245,19 @@ class MovieController extends AbstractController
     public function movie_details(int $id)
     {
         $movie = $this->getDoctrine()->getRepository(Movie::class)->find($id);
+        $allmovies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        $movies;
+        $j=0;
+        while($j<6)
+        {
+            if($allmovies[$j]->getId() != $movie->getId())
+            {
+                $movies[$j] = $allmovies[$j];
+            }
+            $j++;
+        }
         //reikia nukreipti jei id neegzistuoja
-        return $this->render('movie/movie_details.html.twig',['movie' => $movie]);
+        return $this->render('movie/movie_details.html.twig',['movie' => $movie,'allmovies'=>$movies]);
     }
 
     /**

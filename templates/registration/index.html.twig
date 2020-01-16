@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RegistrationController!{% endblock %}
+
+{% block content %}
+<div class="sign section--bg" data-bg="/img/section/section.jpg">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="sign__content">
+					<!-- registration form -->
+					<form method="post" name="form" class="sign__form">
+						<a href="{{ path('index') }}" class="sign__logo">
+							<h2>MovieGoers</h2>
+						</a>
+						{{ form_start(reg_form) }}
+							<div class="sign__group">
+								{{ form_errors(reg_form.username) }}
+						    	{{ form_widget(reg_form.username) }}
+							</div>
+							{% for pass in reg_form.password %}
+								<div class="sign__group">
+									{{ form_errors(pass) }}
+									{{ form_widget(pass) }}
+								</div>
+							{% endfor %}
+
+							<div class="sign__group">
+								{{ form_errors(reg_form.email) }}
+						    	{{ form_widget(reg_form.email) }}
+							</div>
+
+							<div class="sign__group sign__group--checkbox">
+								<input id="remember" name="remember" type="checkbox" checked="checked">
+								<label for="remember">Sutinku su <a href="#">Privatumo Politika</a></label>
+							</div>
+
+							{{ form_widget(reg_form.register) }}
+
+							<span class="sign__text">Jau turi paskyrą? <a href="{{ path('app_login') }}">Prisijungti!</a></span>
+						{{ form_end(reg_form) }}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
