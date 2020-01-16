@@ -1,20 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello {{ userid }} {% endblock %}
+{% block title %}{{ user.username }} mėgiami filmai {% endblock %}
 
 {% block body %}
 
 
-<div>
-    <h1>Hello {{ controller_name }}! ✅</h1>
+{% block content %}
+	<h1>Filmai</h1>
+	<h1>Filmai</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Work/Y3/sistemos/movie-goers/src/Controller/UserController.php'|file_link(0) }}">src/Controller/UserController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Work/Y3/sistemos/movie-goers/templates/user/index.html.twig'|file_link(0) }}">templates/user/index.html.twig</a></code></li>
-    </ul>
-</div>
+<h3><b><a href="/naujas/filmas/" class="btn btn-success">Sukurti filmą</a></b></h3>
+	{% if watchlists %}
+		<table id="movies" class="table table-striped">
+			<thread>
+				</tr>
+			</thread>
+
+			<tbody>
+			{% for watchlist in watchlists %}
+			<tr>
+			<td><h4><font color="green">{{watchlist.id}}</font></h4></td>
+			<td>
+			{# <a href="/filmai/{{ watchlist.id }}" class="btn btn-primary">Parodyti</a>
+			<a href="/filmas/redaguoti/{{ watchlist.id }}" class="btn btn-success">Redaguoti</a>
+			<a href="#" class="btn btn-danger delete-movie" data-id="{{ movie.id }}">Delete</a> #}
+			</td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No movies</p>
+	{% endif%}
 {% endblock %}
 
-{% block content %}
+{% block javascripts %}
+	<script src="/js/delete.js"></script>
+{% endblock %}
 {% endblock %}

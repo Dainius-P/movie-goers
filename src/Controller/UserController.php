@@ -15,9 +15,13 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\User;
 use App\Entity\WatchList;
+use App\Entity\Movie;
+use App\Repository\MovieRepository;
 use App\Repository\UserRepository;
+use App\Repository\WatchListRepository;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserController extends AbstractController
@@ -30,11 +34,34 @@ class UserController extends AbstractController
         $user = $this ->getUser();
        	return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'user' => $user ]);
         }
-    
     /**
-     * @Route("/user/{page}/watchlist", name="watchlist")
+     * @Route("/addwatchlist", name="addwatchlist")
+     * @return Response
      */
-    public function watchlist()
+    public function addwatchlist($id, MovieRepository $movieRepository)
+    {
+        $watchList=new WatchList();
+        $user = $this->getUser();        
+        $movie = $movieRepository->find($id);
+
+        $watchList ->setMovieID($movie->getId());
+        $watchList ->setOwnerID($user->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em ->persist($watchList);
+        $em->flush();
+        return $this->redirectToRoute('user');
+    } 
+    /**
+     * @Route("/user/{page}/watchlist", name="removewatchlist")
+     */
+    public function removewatchlist()
+    {
+    return $this->render('user/watchlist.html.twig', ['controller_name' => 'UserController', ]);
+    } 
+    /**
+     * @Route("/user/{id}/watchlist", name="watchlist")
+     */
+    public function watchlist($id, WatchListRepository $watchListRepository)
     {
     return $this->render('user/watchlist.html.twig', ['controller_name' => 'UserController', ]);
     } 
@@ -109,7 +136,7 @@ class UserController extends AbstractController
     {
         //$id = 17;
         $user = $userRepository->find($id);
-        dump($user, $id);
+        //dump($user, $id);
         return $this->render('user/user.html.twig', ['controller_name' => 'UserController', 'user' => $user ]);
 	} 
 }
