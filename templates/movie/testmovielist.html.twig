@@ -1,30 +1,28 @@
 {% extends 'testbase.html.twig' %}
 
 {% block title %}
-	Movie list(test)
+	Filmų sąrašas administratoriui
 {% endblock %}
 
 
-{% block body %}
-	<h1>Movies</h1>
-	{{ m.Pavadinimas }}
-	{{ cnt }}
-<h3><b><a href="/new_movie/new2" class="btn btn-success">Create movie</a></b></h3>
+{% block content %}
+	<h1>Filmai</h1>
+	<h1>Filmai</h1>
+
+<h3><b><a href="/naujas/filmas/" class="btn btn-success">Sukurti filmą</a></b></h3>
 	{% if movies %}
 		<table id="movies" class="table table-striped">
 			<thread>
-				<tr>Movie</th>
-				<tr>Action</th>
 				</tr>
 			</thread>
 
 			<tbody>
 			{% for movie in movies %}
 			<tr>
-			<td>{{movie.Pavadinimas}}</td>
+			<td><h4><font color="green">{{movie.Pavadinimas}}</font></h4></td>
 			<td>
-			<a href="/movie/{{ movie.id }}" class="btn btn-primary">Show</a>
-			<a href="/movie/edit/{{ movie.id }}" class="btn btn-success">Edit</a>
+			<a href="/filmai/{{ movie.id }}" class="btn btn-primary">Parodyti</a>
+			<a href="/filmas/redaguoti/{{ movie.id }}" class="btn btn-success">Redaguoti</a>
 			<a href="#" class="btn btn-danger delete-movie" data-id="{{ movie.id }}">Delete</a>
 			</td>
 			</tr>

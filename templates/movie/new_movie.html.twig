@@ -1,11 +1,15 @@
 {% extends 'testbase.html.twig' %}
 
 {% block title %}
-Filmo kurimas
+Filmo kūrimas
 {% endblock %}
 
-{% block body%}
+{% block content%}
+<h1>Filmai</h1>
+<h1>Filmai</h1>
+<font color="green"><h4>
 {{ form_start(form)}}
 {{ form_widget(form)}}
-{{ form_end(form)}}
+{{ form_end(form)}}</font></h4>
+<a href="/filmu_redagavimas" class="btn btn-primary">Atgal</a>
 {% endblock %}

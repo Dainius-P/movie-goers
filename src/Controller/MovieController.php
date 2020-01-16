@@ -18,24 +18,75 @@ use Symfony\Component\Form\Extension\Core\Type\TimeType;
 class MovieController extends AbstractController
 {
     /**
-    *@Route("/",name="randmovies")
+    *@Route("/filmu_sarasas",name="filmu_sarasas")
     */
     public function randmovies()
     {
-        $cnt = 4;
-        $movies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
-        if($cnt >= count($movies))
-        {
-            $cnt = count($movies);
-            return $this->render('index/index.html.twig',['rmovies'=>$rmovies]);
+        $cnt = 4;        
+        $allmovies = $this->getDoctrine()->getRepository(Movie::class)->findAll();
+        $totalcnt =count($allmovies);
+        $randmovies = array(0);
+        $newmovies;
+        $currentdate = date("Y-m-d");
+        
+        // $interval = $startDate->diff($endDate);
+        // echo (int)(($interval->days) / 7);
+        //$date = date("Y-m-d", strtotime($date));
+        $date1 = "17-09-2018"; 
+        $date2 = "31-09-2018";
+        $diff=0;
+        $j = 0;
+        for ($i=0; $i < $totalcnt; $i++) 
+        { 
+
+            $date = $allmovies[$i]->getIsleidimoData();
+            $diff = $date;
+            $diff = date("Y-m-d");
+            //$diff = $date->format("Y-m-d");
+            $currentdate = date("d-m-Y");
+            //$diff = strtotime($currentdate) - strtotime($date); 
+      
+            // 1 day = 24 hours 
+            // 24 * 60 * 60 = 86400 seconds 
+            // $diff = abs(round($diff / 86400));
+            // //$interval = $date->diff($currentdate);
+            // //$interval = date_diff($date, $currentdate);
+            // // $interval = (int)(($interval->days)/7);
+            // if($diff <= 365)
+            // {
+            //     $newmovies[$j] = $allmovies[$i];
+            //     $j++;
+            // }
+            //$diff = $date->format("d-m-Y");
         }
-        return $this->render('index/index.html.twig',['rmovies'=>$rmovies]);
+        //$currentdate = date("d-m-Y");
+        // $diff = strtotime($date1) - strtotime($date2);
+        // $diff = abs(round($diff / 86400));
+        if($cnt < $totalcnt)
+        {
+            $randIndex = array_rand($allmovies, $cnt);
+            $i=0;
+            while($cnt > $i)
+            {
+                $randmovies[$i] = $allmovies[$randIndex[$i]];
+                $i=$i+1;
+            }
+        }
+        else
+        {
+            $randmovies = $allmovies;
+        }
+        if($j==0)
+        {
+            return $this->render('movie/movie_list.html.twig',['allmovies'=>$allmovies,'randmovies'=>$randmovies,]);
+        }
+        return $this->render('movie/movie_list.html.twig',['allmovies'=>$allmovies,'randmovies'=>$randmovies,'newmovies'=>$newmovies]);
     }
 
 
 
     /**
-    *@Route("/movie/edit/{id}",name="edit_movie",methods={"GET","POST"})
+    *@Route("/filmas/redaguoti/{id}",name="edit_movie",methods={"GET","POST"})
     */
     public function edit(Request $request, $id)
     {
@@ -49,11 +100,7 @@ class MovieController extends AbstractController
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Pelnas',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Islaidos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Pajamos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Originalus_pavadinimas',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('save',SubmitType::class,['label'=>'Update', 'attr' => ['class' => 'btn btn-primary mt-3']])
+        ->add('save',SubmitType::class,['label'=>'Redaguoti', 'attr' => ['class' => 'btn btn-primary mt-3']])
         ->getForm();
 
         $form->handleRequest($request);
@@ -69,7 +116,7 @@ class MovieController extends AbstractController
 
 
     /**
-    *@Route("/test_movie_list",name="testmovielist")
+    *@Route("/filmu_redagavimas",name="testmovielist")
     */
     public function test_movielist()
     {
@@ -122,7 +169,7 @@ class MovieController extends AbstractController
     }
 
     /**
-    *@Route("/new_movie/new2",name="new_movie2",methods={"GET","POST"})
+    *@Route("/naujas/filmas/",name="new_movie2",methods={"GET","POST"})
     */
     public function new_movie2(Request $request)
     {
@@ -135,11 +182,7 @@ class MovieController extends AbstractController
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Pelnas',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Islaidos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Pajamos',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Originalus_pavadinimas',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('save',SubmitType::class,['label'=>'Create', 'attr' => ['class' => 'btn btn-primary mt-3']])
+        ->add('save',SubmitType::class,['label'=>'Kurti', 'attr' => ['class' => 'btn btn-primary mt-3']])
         ->getForm();
 
         $form->handleRequest($request);
