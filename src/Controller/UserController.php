@@ -51,21 +51,21 @@ class UserController extends AbstractController
             'label' => false,
             'required'=> false
         ])        
-        ->add('email', EmailType::class, [
+        ->add('email', EmailType::class, ['required'=>false,
             'attr' => ['class' => 'sign__input'],
             'label' => false,
         ])
-        ->add('phone', TextType::class, [
+        ->add('phone', TextType::class, ['required'=>false,
             'attr' => ['class' => 'sign__input',
             'placeholder' => "Tel. numeris"],
             'label' => false,
         ])
-        ->add('description', TextType::class, [
+        ->add('description', TextType::class, ['required'=>false,
             'attr' => ['class' => 'sign__input',
             'placeholder' => "Aprašymas"],
             'label' => false,
         ])
-        ->add('attachment', FileType::class,[
+        ->add('attachment', FileType::class,['required'=>false,
             'mapped' => false,
             'label' => false,
         ])

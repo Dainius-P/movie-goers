@@ -109,14 +109,14 @@ class MovieController extends AbstractController
         {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
-            return $this->redirectToRoute('testmovielist');
+            return $this->redirectToRoute('filmuredagavimas');
         }
         return $this->render('movie/edit_movie.html.twig',['form'=> $form->createView()]);
     }
 
 
     /**
-    *@Route("/filmu_redagavimas",name="testmovielist")
+    *@Route("/filmu/redagavimas",name="filmuredagavimas")
     */
     public function test_movielist()
     {
@@ -150,7 +150,7 @@ class MovieController extends AbstractController
         $movie = $entityManager->getRepository('App\Entity\Movie')->find($id);
 
         if (!$movie) {
-            return $this->redirectToRoute('testmovielist');
+            return $this->redirectToRoute('filmuredagavimas');
         }
 
         $entityManager->remove($movie);
@@ -178,10 +178,10 @@ class MovieController extends AbstractController
         $form = $this->createFormBuilder($movie)
         ->add('Pavadinimas',TextType::class,['attr'=>['class'=>'form-control']])
         ->add('Aprasymas',TextareaType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Isleidimo_data',DateType::class,['required'=>false,'attr'=>['class'=>'sign__input']])
         ->add('Ivercio_vidurkis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
         ->add('Ivercio_kiekis',TextType::class,['required'=>false,'attr'=>['class'=>'form-control']])
-        ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'form-control']])
+        ->add('Trukme',TimeType::class,['required'=>false,'attr'=>['class'=>'sign__input']])
         ->add('save',SubmitType::class,['label'=>'Kurti', 'attr' => ['class' => 'btn btn-primary mt-3']])
         ->getForm();
 
@@ -192,7 +192,7 @@ class MovieController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($movie);
             $entityManager->flush();
-            return $this->redirectToRoute('patv');
+            return $this->redirectToRoute('filmuredagavimas');
         }
         return $this->render('movie/new_movie.html.twig',['form'=> $form->createView()]);
     }

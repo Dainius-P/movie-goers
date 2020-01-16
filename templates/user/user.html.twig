@@ -37,7 +37,7 @@
 									<ul class="card__meta">
                                     {% if user.Birthday is empty %}
                                     {% else %}
-                                        <li><span>Gimimo data: {{user.Birthday}}</span> </li>
+                                        <li><span>Gimimo data: {{user.Birthday|date("m/d/Y")}}</span> </li>
                                     {% endif %}
                                     {% if user.Phone is empty %}
                                     {% else %}
