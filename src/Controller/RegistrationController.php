@@ -88,11 +88,11 @@ class RegistrationController extends AbstractController
 
             $em ->persist($user);
             $em->flush();
-            //return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('registration/index.html.twig', [
-             'form' => $form->createView()
+             'reg_form' => $form->createView()
         ]);
     }
     
